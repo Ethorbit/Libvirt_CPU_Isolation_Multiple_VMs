@@ -1,5 +1,4 @@
-# Libvirt CPU Isolation for Multiple Virtual Machines
-Isolate the cores of 2+ virtual machines which have different cores without conflicting.
+Tutorial to isolate the cores of 2+ virtual machines which have different cores without conflicting.
 
 # Create the hook files
 Libvirt runs scripts in directories that have the same name as a Virtual Machine located in /etc/libvirt/hooks/qemu.d 
