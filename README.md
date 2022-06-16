@@ -1,2 +1,2 @@
-# Libvirt_CPU_Isolation_Multiple_VMs
+# Libvirt CPU Isolation for Multiple Virtual Machines
 Isolate different CPU core ranges for 2+ virtual machines without conflicting
