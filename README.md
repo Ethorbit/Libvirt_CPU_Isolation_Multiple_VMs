@@ -30,7 +30,5 @@ Inside the release script, add:
 ```
 Change the values to the cores you need to isolate. 
 
-**Tip:** You can also do a range (e.g., "0-3")
-
 ## 4. Restart libvirt
 `systemctl restart libvirtd`
