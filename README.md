@@ -15,8 +15,8 @@ Create these two files:
 * `/etc/libvirt/hooks/qemu.d/your vm's name/prepare/begin/start.sh`
 * `/etc/libvirt/hooks/qemu.d/your vm's name/release/end/revert.sh`
 
-**Tip:** you can create a symbolic link pointing to a single directory if many virtual machines need the same hooks e.g:
-`ln -s /etc/libvirt/hooks/qemu.d/FourCores /etc/libvirt/hooks/qemu.d/your vm's name`
+**Tip:** you can create a symbolic link pointing to a single directory if many virtual machines need the same hooks (e.g.,
+`ln -s /etc/libvirt/hooks/qemu.d/FourCores /etc/libvirt/hooks/qemu.d/your vm's name`)
 
 ## 3. Edit the hook files
 Inside the prepare script, add:
@@ -28,7 +28,9 @@ Inside the release script, add:
 ```
 /etc/libvirt/hooks/isolate-cores.sh "0,1,2,3" "0"
 ```
-change the values to the cores you need to isolate.
+Change the values to the cores you need to isolate. 
+
+**Tip:** You can also do a range (e.g., "0-3")
 
 ## 4. Restart libvirt
 `systemctl restart libvirtd`
