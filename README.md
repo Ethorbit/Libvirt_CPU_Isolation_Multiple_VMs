@@ -28,9 +28,9 @@ Inside the release script, add:
 ```
 /etc/libvirt/hooks/isolate-cores.sh "0,1,2,3" "0"
 ```
-Change the values to the cores you need to isolate. 
+Change the values to the cores **you want to allow the host to use**. 
 
-**Tip:** You can also do a range (e.g., "0-3")
+**Tip:** You can also do a range (e.g., "0-3"), but you cannot do both at once.
 
 ## 4. Restart libvirt
 `systemctl restart libvirtd`
