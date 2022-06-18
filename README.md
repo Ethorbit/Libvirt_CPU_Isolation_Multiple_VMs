@@ -21,12 +21,14 @@ Create these two files:
 ## 3. Edit the hook files
 Inside the prepare script, add:
 ```
-/etc/libvirt/hooks/isolate-cores.sh "0,1,2,3" "1"
+GUEST_NAME="$1"
+/etc/libvirt/hooks/isolate-cores.sh --name "$GUEST_NAME" --cores "0,1,2,3" --add
 ```
 
 Inside the release script, add:
 ```
-/etc/libvirt/hooks/isolate-cores.sh "0,1,2,3" "0"
+GUEST_NAME="$1"
+/etc/libvirt/hooks/isolate-cores.sh --name "$GUEST_NAME" --cores "0,1,2,3" --remove
 ```
 Change the values to the cores you want to isolate from the host while the VM is on. 
 
