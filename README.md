@@ -4,9 +4,7 @@ Scenario: You need to isolate the cores for several virtual machines that have d
 This is a tutorial showing how to do this with the only requirement being that you have systemd.
 
 ## 1. Add isolate-cores.sh
-`git clone "https://github.com/Ethorbit/Libvirt_CPU_Isolation_Multiple_VMs.git" && cd Libvirt_CPU_Isolation_Multiple_VMs`
-
-`mv ./isolate-cores.sh /etc/libvirt/hooks/isolate-cores.sh`
+`wget "https://raw.githubusercontent.com/Ethorbit/Libvirt_CPU_Isolation_Multiple_VMs/main/isolate-cores.sh" -O /etc/libvirt/hooks/isolate-cores.sh && chmod +x /etc/libvirt/hooks/isolate-cores.sh`
 
 ## 2. Create the hook files for your virtual machines
 Libvirt executes scripts in directories that have the same name as a VM when it starts, stops, etc
