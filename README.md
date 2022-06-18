@@ -30,7 +30,7 @@ Inside the release script, add:
 GUEST_NAME="$1"
 /etc/libvirt/hooks/isolate-cores.sh --name "$GUEST_NAME" --cores "0,1,2,3" --remove
 ```
-Change the values to the cores you want to isolate from the host while the VM is on. 
+Change the values to the cores you want to isolate from the host. 
 
 **Tip:** You can also do a range (e.g., "0-3"), but you cannot do both at once.
 
