@@ -1,5 +1,5 @@
 # Libvirt CPU Isolation with Multiple VMs
-Scenario: You need to isolate the cores at runtime for several virtual machines that use different cores, but you don't want to screw up the isolation for the other VMs that may be running when one turns on/off.
+Scenario: You need to isolate the cores at runtime for several libvirt virtual machines that use different cores, but you don't want to screw up the isolation for the other VMs that may be running when one turns on/off.
 
 This is a tutorial showing how to do this with the only requirement being that you have systemd.
 
