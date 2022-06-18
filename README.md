@@ -4,7 +4,7 @@ Scenario: You need to isolate the cores at runtime for several virtual machines 
 This is a tutorial showing how to do this with the only requirement being that you have systemd.
 
 ## 1. Add isolate-cores.sh
-`wget "https://raw.githubusercontent.com/Ethorbit/Libvirt_CPU_Isolation_Multiple_VMs/main/isolate-cores.sh" -O /etc/libvirt/hooks/isolate-cores.sh && chmod +x /etc/libvirt/hooks/isolate-cores.sh`
+`wget "https://raw.githubusercontent.com/Ethorbit/Libvirt_CPU_Isolation_Multiple_VMs/main/isolate-cores.sh" -O /usr/bin/isolate-cores.sh && chmod +x /usr/bin/isolate-cores.sh`
 
 ## 2. Create the hook files for your virtual machines
 Libvirt executes scripts in directories that have the same name as a VM when it starts, stops, etc
@@ -22,13 +22,13 @@ Create these two files:
 Inside the prepare script, add:
 ```
 GUEST_NAME="$1"
-/etc/libvirt/hooks/isolate-cores.sh --name "$GUEST_NAME" --cores "0,1,2,3" --add
+isolate-cores.sh --name "$GUEST_NAME" --cores "0,1,2,3" --add
 ```
 
 Inside the release script, add:
 ```
 GUEST_NAME="$1"
-/etc/libvirt/hooks/isolate-cores.sh --name "$GUEST_NAME" --cores "0,1,2,3" --remove
+isolate-cores.sh --name "$GUEST_NAME" --cores "0,1,2,3" --remove
 ```
 Change the values to the cores you want to isolate from the host. 
 
