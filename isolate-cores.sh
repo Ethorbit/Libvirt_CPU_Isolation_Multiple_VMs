@@ -8,7 +8,6 @@ IS_VERBOSE="0"
 
 # Create temporary file to manage active core isolations (for all virtual machines)
 ISOLATED_CPU_FILE="/tmp/libvirt-isolated-cpus.txt"
-
 [ ! -f "$ISOLATED_CPU_FILE" ] && touch "$ISOLATED_CPU_FILE"
 
 # Handle args
