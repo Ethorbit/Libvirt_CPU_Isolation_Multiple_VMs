@@ -32,7 +32,18 @@ isolate-cores.sh --name "$GUEST_NAME" --cores "0,1,2,3" --remove
 ```
 Change the values to the cores you want to isolate from the host. 
 
-**Tip:** You can also do a range (e.g., "0-3"), but you cannot do both at once.
+**Tip:** You can also do a range (e.g., "0-3") instead.
 
 ## 4. Restart libvirt
 `systemctl restart libvirtd`
+
+## 5. Test it 
+Start the VM and see if the entry was added.
+
+`isolate-cores.sh --list`
+
+You should see something like this when it's on:
+> My-VM-Name 0 1 2 3
+
+And when turned off:
+> My-VM-Name
