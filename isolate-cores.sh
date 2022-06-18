@@ -38,14 +38,14 @@ if ! cat "$ISOLATED_CPU_FILE" | grep -q "^$VIRTUAL_MACHINE_NAME"; then
      [ "$IS_VERBOSE" -eq 1 ] && echo "Added new entry for $VIRTUAL_MACHINE_NAME" 
 fi
 
-# Process and sanitize --cores 
+# Sanitize --cores 
 range=$(echo "$ISOLATE_THESE_CORES" | grep -o "\b\([0-9]*-[0-9]*\)\b")
 
 if [ $(echo "$range" | wc -c) -gt 1 ]; then # They're adding cores with a range 
      range_min=$(echo "$range" | cut -d "-" -f1)
      range_max=$(echo "$range" | cut -d "-" -f2)  
 
-     [ "$IS_VERBOSE" -eq 1 ] && echo "Adding core range $range_min to $range_max" 
+     [ "$IS_VERBOSE" -eq 1 ] && echo "Processing core range $range_min to $range_max" 
 
      for ((i = $range_min; i <= $range_max; i++)); do
 	  sanitized_core_list="$sanitized_core_list $i"	  
@@ -67,12 +67,21 @@ else
      sed -i "/^$VIRTUAL_MACHINE_NAME/ s/$sanitized_core_list//" "$ISOLATED_CPU_FILE"
 fi
 
-# Finally, read from the file containing all isolated cores, communicate it to Systemd
+if [ "$IS_VERBOSE" -eq 1 ]; then 
+     if [ "$IS_ADDING" -eq 1 ]; then 
+	  echo "Adding isolated cores for $VIRTUAL_MACHINE_NAME"
+     else 
+	  echo "Removing isolated cores from $VIRTUAL_MACHINE_NAME"
+     fi
+fi
+
+# Finally, read from the file containing all isolated cores, relay it to Systemd
 all_isolated_cores=$(cat "$ISOLATED_CPU_FILE")
 allowed_cores=""
 
-for ((i = 0; i <= $(nproc --all); i++)); do  
-     if ! echo "$all_isolated_cores" | grep -q "\s$i\s"; then 
+for ((i = 0; i <= $(nproc --all) - 1; i++)); do 
+     echo "Testing $i"
+     if ! echo "$all_isolated_cores" | grep -q "\s$i\b"; then 
 	  allowed_cores="$allowed_cores$i,"
      fi 
 done
@@ -81,6 +90,6 @@ done
 allowed_cores="${allowed_cores::-1}"
 
 [ "$IS_VERBOSE" -eq 1 ] && echo "Cores allowed on host: $allowed_cores" 
-#systemctl set-property --runtime -- system.slice AllowedCPUs=$allowed_cores
-#systemctl set-property --runtime -- user.slice AllowedCPUs=$allowed_cores
-#systemctl set-property --runtime -- init.scope AllowedCPUs=$allowed_cores
+systemctl set-property --runtime -- system.slice AllowedCPUs=$allowed_cores
+systemctl set-property --runtime -- user.slice AllowedCPUs=$allowed_cores
+systemctl set-property --runtime -- init.scope AllowedCPUs=$allowed_cores
