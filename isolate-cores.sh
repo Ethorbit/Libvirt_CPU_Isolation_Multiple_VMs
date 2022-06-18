@@ -1,33 +1,39 @@
 #!/bin/bash
+if [ $(id -u) -ne 0 ]; then
+	echo "You must run this as root."
+	exit;
+fi
+
 IS_VERBOSE="0"
 
 # Create temporary file to manage active core isolations (for all virtual machines)
 ISOLATED_CPU_FILE="/tmp/libvirt-isolated-cpus.txt"
-touch "$ISOLATED_CPU_FILE"
+
+[ ! -f "$ISOLATED_CPU_FILE" ] && touch "$ISOLATED_CPU_FILE"
 
 # Handle args
 while [ $# -gt 0 ]; do 
      case $1 in 
-	  -l | --list)
-	       # add ability to list a specific virtual machine's cores later
-	       cat "$ISOLATED_CPU_FILE"
-	       exit; 
-	  ;;
-	  -n | --name)
-	       VIRTUAL_MACHINE_NAME="$2"
-	  ;;
-	  -c | --cores)
-	       ISOLATE_THESE_CORES="$2"
-	  ;;
-	  -a | --add)
-	       IS_ADDING="1"
-	  ;;
-	  -r | --remove)
-	       IS_ADDING="0"
-	  ;;
-	  -v | --verbose)
-	       IS_VERBOSE="1"
-	  ;;
+	 -l | --list)
+	      # add ability to list a specific virtual machine's cores later
+	      cat "$ISOLATED_CPU_FILE"
+	      exit; 
+	 ;;
+	 -n | --name)
+	      VIRTUAL_MACHINE_NAME="$2"
+	 ;;
+	 -c | --cores)
+	      ISOLATE_THESE_CORES="$2"
+	 ;;
+	 -a | --add)
+	      IS_ADDING="1"
+	 ;;
+	 -r | --remove)
+	      IS_ADDING="0"
+	 ;;
+	 -v | --verbose)
+	      IS_VERBOSE="1"
+	 ;;
      esac
      shift
 done
@@ -48,13 +54,13 @@ if [ $(echo "$range" | wc -c) -gt 1 ]; then # They're adding cores with a range
      [ "$IS_VERBOSE" -eq 1 ] && echo "Processing core range $range_min to $range_max" 
 
      for ((i = $range_min; i <= $range_max; i++)); do
-	  sanitized_core_list="$sanitized_core_list $i"	  
+	 sanitized_core_list="$sanitized_core_list $i"	 
      done
 else # They're adding a separated list
      cores=$(echo "$ISOLATE_THESE_CORES" | grep -o "[0-9]*") 
 
      for i in $cores; do
-	  sanitized_core_list="$sanitized_core_list $i"
+	 sanitized_core_list="$sanitized_core_list $i"
      done
 fi
 
@@ -69,9 +75,9 @@ fi
 
 if [ "$IS_VERBOSE" -eq 1 ]; then 
      if [ "$IS_ADDING" -eq 1 ]; then 
-	  echo "Adding isolated cores for $VIRTUAL_MACHINE_NAME"
+	 echo "Adding isolated cores for $VIRTUAL_MACHINE_NAME"
      else 
-	  echo "Removing isolated cores from $VIRTUAL_MACHINE_NAME"
+	 echo "Removing isolated cores from $VIRTUAL_MACHINE_NAME"
      fi
 fi
 
@@ -81,7 +87,7 @@ allowed_cores=""
 
 for ((i = 0; i <= $(nproc --all) - 1; i++)); do 
      if ! echo "$all_isolated_cores" | grep -q "\s$i\b"; then 
-	  allowed_cores="$allowed_cores$i,"
+	 allowed_cores="$allowed_cores$i,"
      fi 
 done
 
