@@ -28,7 +28,7 @@ Inside the release script, add:
 ```
 /etc/libvirt/hooks/isolate-cores.sh "0,1,2,3" "0"
 ```
-Change the values to the cores **you want to allow the host to use**. 
+Change the values to the cores you want to isolate from the host while the VM is on. 
 
 **Tip:** You can also do a range (e.g., "0-3"), but you cannot do both at once.
 
