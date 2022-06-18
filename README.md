@@ -13,6 +13,8 @@ Create these two files:
 * `/etc/libvirt/hooks/qemu.d/your vm's name/prepare/begin/start.sh`
 * `/etc/libvirt/hooks/qemu.d/your vm's name/release/end/revert.sh`
 
+(Make sure to chmod +x them)
+
 **Tip:** you can create a symbolic link pointing to a single directory instead if many virtual machines need the same hooks (e.g.,
 `ln -s /etc/libvirt/hooks/qemu.d/FourCores /etc/libvirt/hooks/qemu.d/your vm's name`)
 
