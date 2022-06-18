@@ -80,7 +80,6 @@ all_isolated_cores=$(cat "$ISOLATED_CPU_FILE")
 allowed_cores=""
 
 for ((i = 0; i <= $(nproc --all) - 1; i++)); do 
-     echo "Testing $i"
      if ! echo "$all_isolated_cores" | grep -q "\s$i\b"; then 
 	  allowed_cores="$allowed_cores$i,"
      fi 
