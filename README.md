@@ -1,8 +1,6 @@
 # Libvirt CPU Isolation with Multiple VMs
 Scenario: You need to isolate the cores at runtime for several libvirt virtual machines that use different cores, but you don't want to screw up the isolation for the other VMs that may be running when one turns on/off and you want those cores made available to the host again as soon as no VMs are using them.
 
-This is a tutorial showing how to do this with the only requirement being that you have systemd.
-
 ## 1. Add isolate-cores.sh
 `wget "https://raw.githubusercontent.com/Ethorbit/Libvirt_CPU_Isolation_Multiple_VMs/main/isolate-cores.sh" -O /usr/bin/isolate-cores.sh && chmod +x /usr/bin/isolate-cores.sh`
 
