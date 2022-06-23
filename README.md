@@ -1,4 +1,4 @@
-# Libvirt CPU Isolation with Multiple VMs
+# Dynamic Libvirt CPU Isolation
 Scenario: You need to isolate the cores at runtime for several libvirt virtual machines that may use different cores, but you don't want to conflict with existing isolated cores and you want the cores made available to the host again as soon as the VMs using them have powered off.
 
 ## 1. Add isolate-cores.sh
